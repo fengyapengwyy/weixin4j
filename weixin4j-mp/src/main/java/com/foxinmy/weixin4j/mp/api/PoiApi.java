@@ -12,6 +12,7 @@ import com.foxinmy.weixin4j.model.card.MemberUserInfo;
 import com.foxinmy.weixin4j.model.poi.Poi;
 import com.foxinmy.weixin4j.model.poi.PoiBaseInfo;
 import com.foxinmy.weixin4j.model.poi.PoiChoose;
+import com.foxinmy.weixin4j.model.poi.PoiList;
 import com.foxinmy.weixin4j.token.TokenManager;
 
 import java.util.ArrayList;
@@ -75,7 +76,32 @@ public class PoiApi extends MpApi {
 		});
 	}
 
-	public List<Poi> getPoiList(Integer begin, Integer limit) throws WeixinException {
+	/**
+	 * 查询 当前账户下 门店的数量
+	 * @return the integer
+	 * @throws WeixinException the weixin exception
+	 * @author zhangbin
+	 * @since -2017-01-20 16:37:32
+	 */
+	public Integer countPoi() throws WeixinException {
+		JSONObject request = new JSONObject();
+		request.put("begin",0);
+		request.put("limit",1);//坑爹的微信 必须传入1
+		String poi_get_list_uri = getRequestUri("poi_get_list_uri");
+		WeixinResponse response = weixinExecutor.post(
+				String.format(poi_get_list_uri, tokenManager.getAccessToken()),
+				request.toJSONString());
+		return response.getAsJson().getInteger("total_count");
+	}
+
+	/**
+	 * 查询微信门店列表
+	 * @param begin the begin
+	 * @param limit the limit
+	 * @return the poi list
+	 * @throws WeixinException the weixin exception
+	 */
+	public PoiList getPoiList(Integer begin, Integer limit) throws WeixinException {
 		begin=(begin==null)?begin=0:begin;
 		limit=(limit==null)?limit=30:limit;
 		JSONObject request = new JSONObject();
@@ -85,16 +111,28 @@ public class PoiApi extends MpApi {
 		WeixinResponse response = weixinExecutor.post(
 				String.format(poi_get_list_uri, tokenManager.getAccessToken()),
 				request.toJSONString());
+		PoiList list = new PoiList();
+		list.setTotalCount(response.getAsJson().getInteger("total_count"));
 		JSONArray jsonArray = response.getAsJson().getJSONArray("business_list");
-		List<Poi> list = new ArrayList();
+		List<Poi> array = new ArrayList();
 		for (int i = 0; i < jsonArray.size(); i++) {
 			Poi poi = JSON.parseObject(jsonArray.getJSONObject(i).getString("base_info"), new TypeReference<Poi>() {
 			});
-			list.add(poi);
+			array.add(poi);
 		}
+		list.setList(array);
 		return list;
 	}
 
+	/**
+	 * 修改门店基本信息
+	 * (可变信息)
+	 * @param poi the poi
+	 * @return the boolean
+	 * @throws WeixinException the weixin exceptionTODO(方法作用)Update poi.
+	 * @author zhangbin
+	 * @since -2017-01-20 16:38:16
+	 */
 	public boolean updatePoi(PoiChoose poi) throws WeixinException {
 		JSONObject baseInfo = new JSONObject();
 		baseInfo.put("base_info",poi);
@@ -110,7 +148,16 @@ public class PoiApi extends MpApi {
 		return false;
 	}
 
-    public boolean deletePoi(String poiId) throws WeixinException {
+	/**
+	 * 删除一个门店
+	 *
+	 * @param poiId the poi id
+	 * @return the boolean
+	 * @throws WeixinException the weixin exception
+	 * @author zhangbin
+	 * @since -2017-01-20 16:38:31
+	 */
+	public boolean deletePoi(String poiId) throws WeixinException {
         JSONObject request = new JSONObject();
         request.put("poi_id",poiId);
         String poi_del_uri = getRequestUri("poi_del_uri");
@@ -123,7 +170,14 @@ public class PoiApi extends MpApi {
         return false;
     }
 
- 	public List<String> getCategoryList() throws WeixinException {
+	/**
+	 * 查询 设置门店(闯进门店)
+	 * 所使用的 门店分类信息
+	 *
+	 * @return the category list
+	 * @throws WeixinException the weixin exception
+	 */
+	public List<String> getCategoryList() throws WeixinException {
 		String poi_category_uri = getRequestUri("poi_category_uri");
 		WeixinResponse response = weixinExecutor.post(
 				String.format(poi_category_uri, tokenManager.getAccessToken()),"");
