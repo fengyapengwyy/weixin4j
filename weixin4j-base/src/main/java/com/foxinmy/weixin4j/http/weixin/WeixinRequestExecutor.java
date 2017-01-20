@@ -29,6 +29,7 @@ import com.foxinmy.weixin4j.logging.InternalLogLevel;
 import com.foxinmy.weixin4j.logging.InternalLogger;
 import com.foxinmy.weixin4j.logging.InternalLoggerFactory;
 import com.foxinmy.weixin4j.util.Consts;
+import com.foxinmy.weixin4j.util.WeixinErrorUtil2;
 
 /**
  * 负责微信请求的执行
@@ -184,7 +185,7 @@ public class WeixinRequestExecutor {
 				.toLowerCase()))) {
 			printHttpRequest(request,InternalLogLevel.WARN);
 			throw new WeixinException(result.getReturnCode(),
-					result.getReturnMsg());
+									  result.getReturnMsg(), WeixinErrorUtil2.getText(result.getReturnCode()));
 		}
 		if (XmlMessageConverter.GLOBAL.canConvert(XmlResult.class, response)) {
 			try {
@@ -193,8 +194,7 @@ public class WeixinRequestExecutor {
 				if (!SUCCESS_CODE.contains(String.format(",%s,", xmlResult
 						.getResultCode().toLowerCase()))) {
 					printHttpRequest(request,InternalLogLevel.WARN);
-					throw new WeixinException(xmlResult.getErrCode(),
-							xmlResult.getErrCodeDes());
+					throw new WeixinException(xmlResult.getErrCode(),xmlResult.getErrCodeDes(),WeixinErrorUtil2.getText(xmlResult.getErrCode()));
 				}
 			} catch (IOException e) {
 				;
