@@ -16,7 +16,6 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.foxinmy.weixin4j.exception.WeixinException;
-import com.foxinmy.weixin4j.exception.WeixinPayException;
 import com.foxinmy.weixin4j.http.weixin.WeixinResponse;
 import com.foxinmy.weixin4j.http.weixin.XmlResult;
 import com.foxinmy.weixin4j.model.WeixinPayAccount;
@@ -93,7 +92,7 @@ public class PayApi extends MchApi {
             prePay.setResponse(response.getAsString());
             return prePay;
         }
-        throw new WeixinPayException("验证签名信息失败，返回数据可能被篡改");
+        throw new WeixinException("验证签名信息失败，返回数据可能被篡改");
 	}
 
 	/**
