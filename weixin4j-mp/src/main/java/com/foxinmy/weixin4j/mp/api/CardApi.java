@@ -254,6 +254,29 @@ public class CardApi extends MpApi {
 	}
 
 	/**
+	 * 删除卡券<br/>
+	 * 删除卡券接口允许商户删除任意一类卡券。删除卡券后，该卡券对应已生成的领取用二维码、添加到卡包JS API均会失效。
+	 * 注意：如用户在商家删除卡券前已领取一张或多张该卡券依旧有效。即删除卡券不能删除已被用户领取，保存在微信客户端中的卡券。
+	 *
+	 *
+	 * @param cardId the card id
+	 * @return api result
+	 * @throws WeixinException the weixin exception
+	 * @author fengyapeng
+	 * @since 2017 -02-07 15:58:17
+	 */
+	public ApiResult deleteCardCoupon(String cardId) throws WeixinException {
+		JSONObject request = new JSONObject();
+		request.put("card_id", cardId);
+		String card_update_uri = getRequestUri("card_delete_uri");
+		Token token = tokenManager.getCache();
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_update_uri, token.getAccessToken()),
+				JSON.toJSONString(request));
+		return response.getAsResult();
+	}
+
+	/**
 	 * 激活方式说明 接口激活通常需要开发者开发用户填写资料的网页。通常有两种激活流程： 1.
 	 * 用户必须在填写资料后才能领卡，领卡后开发者调用激活接口为用户激活会员卡； 2.
 	 * 是用户可以先领取会员卡，点击激活会员卡跳转至开发者设置的资料填写页面，填写完成后开发者调用激活接口为用户激活会员卡。

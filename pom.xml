@@ -249,13 +249,15 @@
 		</dependencies>
 	</dependencyManagement>
 	<distributionManagement>
-		<snapshotRepository>
-			<id>oss-snapshot</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-		</snapshotRepository>
 		<repository>
-			<id>oss-release</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<id>Project Releases</id>
+			<name>Project Releases</name>
+			<url>http://repo.wyying.com/nexus/content/repositories/releases/</url>
 		</repository>
+		<snapshotRepository>
+			<id>Project Snapshots</id>
+			<name>Project Snapshots</name>
+			<url>http://repo.wyying.com/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
 	</distributionManagement>
 </project>
