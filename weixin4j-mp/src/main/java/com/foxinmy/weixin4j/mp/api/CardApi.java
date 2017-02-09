@@ -168,7 +168,7 @@ public class CardApi extends MpApi {
 	 * 1.同时支持“openid”、“username”两种字段设置白名单，总数上限为10个。
 	 * 2.设置测试白名单接口为全量设置，即测试名单发生变化时需调用该接口重新传入所有测试人员的ID.
 	 * 3.白名单用户领取该卡券时将无视卡券失效状态，请开发者注意。
-	 * 
+	 *
 	 * @param openIds
 	 *            the open ids
 	 * @param userNames
@@ -198,7 +198,7 @@ public class CardApi extends MpApi {
 
 	/**
 	 * 查看获取卡券的审核状态
-	 * 
+	 *
 	 * @see <a href=
 	 *      'https://mp.weixin.qq.com/wiki?action=doc&id=mp1451025272&t=0.18670321276182844#3'
 	 *      > 查看卡券详情</a>
@@ -268,12 +268,58 @@ public class CardApi extends MpApi {
 	public ApiResult deleteCardCoupon(String cardId) throws WeixinException {
 		JSONObject request = new JSONObject();
 		request.put("card_id", cardId);
-		String card_update_uri = getRequestUri("card_delete_uri");
+		String card_delete_uri = getRequestUri("card_delete_uri");
 		Token token = tokenManager.getCache();
 		WeixinResponse response = weixinExecutor.post(
-				String.format(card_update_uri, token.getAccessToken()),
+				String.format(card_delete_uri, token.getAccessToken()),
 				JSON.toJSONString(request));
 		return response.getAsResult();
+	}
+
+    /**
+     * 调用修改库存接口增减某张卡券的库存。
+     *
+     * @param cardId the card id
+     * @param num    the num
+     * @return the api result
+     * @throws WeixinException the weixin exception
+     * @author fengyapeng
+     * @since 2017 -02-07 17:36:36
+     */
+    public ApiResult updateCardCouponStock(String cardId, int num) throws WeixinException {
+		JSONObject request = new JSONObject();
+		request.put("card_id", cardId);
+		if(num>0){
+			request.put("increase_stock_value", num);
+		}else{
+			request.put("reduce_stock_value",-num);
+		}
+		String card_modify_stock_uri = getRequestUri("card_modify_stock_uri");
+		Token token = tokenManager.getCache();
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_modify_stock_uri, token.getAccessToken()),
+				JSON.toJSONString(request));
+		return response.getAsResult();
+	}
+
+	/**
+	 * 消耗code接口是核销卡券的唯一接口,开发者可以调用当前接口将用户的优惠券进行核销，该过程不可逆。
+	 *
+	 * @param cardId the card id
+	 * @param code   the code
+	 * @return api result
+	 * @author fengyapeng
+	 * @since 2017 -02-09 09:56:01
+	 */
+	public String consumeCardCode(String cardId,String code) throws WeixinException {
+		JSONObject request = new JSONObject();
+		request.put("card_id",cardId);
+		request.put("code",code);
+		String card_modify_stock_uri = getRequestUri("card_code_custom_uri");
+		Token token = tokenManager.getCache();
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_modify_stock_uri, token.getAccessToken()));
+		return response.getAsJson().getString("openid");
 	}
 
 	/**
@@ -339,7 +385,7 @@ public class CardApi extends MpApi {
 
 	/**
 	 * 更新会员 result_bonus 当前用户积分总额 result_balance 当前用户预存总金额 openid 用户openid
-	 * 
+	 *
 	 * @param updateInfo
 	 * @return
 	 * @throws WeixinException
