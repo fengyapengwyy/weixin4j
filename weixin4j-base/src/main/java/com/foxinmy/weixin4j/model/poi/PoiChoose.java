@@ -12,7 +12,8 @@ import java.util.List;
  * @since 2017 /1/19 13:53
  */
 public class PoiChoose implements Serializable {
-    private static final long serialVersionUID = -3283450654612160600L;
+
+    private static final long serialVersionUID = 5900325069890670479L;
 
     @JSONField(name = "poi_id",ordinal=12)
     private String poiId;
@@ -24,6 +25,12 @@ public class PoiChoose implements Serializable {
      */
     @JSONField(name = "sid",ordinal=0)
     private String sid;
+    /**
+     * 门店的电话（纯数字，区号、分机号均由“-”隔开
+     */
+    @JSONField(name = "telephone", ordinal = 7)
+    private String telephone;
+
     /**
      * 选填字段(可不填写)
      */
@@ -64,6 +71,7 @@ public class PoiChoose implements Serializable {
     @JSONField(name = "avg_price",ordinal=19)
     private Integer avgPrice;
 
+
     public String getPoiId() {
         return poiId;
     }
@@ -78,6 +86,14 @@ public class PoiChoose implements Serializable {
 
     public void setSid(String sid) {
         this.sid = sid;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public List<PoiPhoto> getPhotoList() {
@@ -128,12 +144,12 @@ public class PoiChoose implements Serializable {
         this.avgPrice = avgPrice;
     }
 
-
     @Override
     public String toString() {
         return "PoiChoose{" +
                 "poiId='" + poiId + '\'' +
                 ", sid='" + sid + '\'' +
+                ", telephone='" + telephone + '\'' +
                 ", photoList=" + photoList +
                 ", recommend='" + recommend + '\'' +
                 ", special='" + special + '\'' +
