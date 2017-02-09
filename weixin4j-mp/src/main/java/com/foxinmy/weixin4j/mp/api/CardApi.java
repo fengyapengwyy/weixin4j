@@ -318,7 +318,7 @@ public class CardApi extends MpApi {
 		String card_modify_stock_uri = getRequestUri("card_code_custom_uri");
 		Token token = tokenManager.getCache();
 		WeixinResponse response = weixinExecutor.post(
-				String.format(card_modify_stock_uri, token.getAccessToken()));
+				String.format(card_modify_stock_uri, token.getAccessToken()),JSON.toJSONString(request));
 		return response.getAsJson().getString("openid");
 	}
 
