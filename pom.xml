@@ -250,14 +250,14 @@
 	</dependencyManagement>
 	<distributionManagement>
 		<repository>
-			<id>Project Releases</id>
+			<id>maven-releases</id>
 			<name>Project Releases</name>
-			<url>http://repo.wyying.com/nexus/content/repositories/releases/</url>
+			<url>http://repo.wyying.com/repository/maven-releases/</url>
 		</repository>
 		<snapshotRepository>
-			<id>Project Snapshots</id>
+			<id>maven-snapshots</id>
 			<name>Project Snapshots</name>
-			<url>http://repo.wyying.com/nexus/content/repositories/snapshots/</url>
+			<url>http://repo.wyying.com/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>

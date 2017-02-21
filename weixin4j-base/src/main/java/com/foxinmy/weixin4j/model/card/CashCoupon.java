@@ -52,7 +52,7 @@ public class CashCoupon extends CardCoupon {
 	}
 
 	public void setLeastCost(double leastCost) {
-		this.leastCost = DateUtil.formatYuan2Fen(reduceCost);
+		this.leastCost = DateUtil.formatYuan2Fen(leastCost);
 	}
 
 	public int getReduceCost() {
