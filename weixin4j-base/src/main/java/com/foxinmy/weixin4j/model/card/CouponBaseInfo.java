@@ -1,6 +1,7 @@
 package com.foxinmy.weixin4j.model.card;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -663,6 +664,9 @@ public class CouponBaseInfo implements Serializable {
 		 * @return
 		 */
 		public Builder locationIds(String... locationIds) {
+			if(this.locationIds == null) {
+				this.locationIds = new ArrayList();
+			}
 			this.locationIds.addAll(Arrays.asList(locationIds));
 			this.useAllLocation = false;
 			return this;
