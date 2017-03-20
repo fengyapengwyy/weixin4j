@@ -13,6 +13,7 @@ import com.foxinmy.weixin4j.model.Token;
 import com.foxinmy.weixin4j.model.card.CardCoupon;
 import com.foxinmy.weixin4j.model.card.CardCoupons;
 import com.foxinmy.weixin4j.model.card.CardQR;
+import com.foxinmy.weixin4j.model.card.MemberCardPayGiftCardRule;
 import com.foxinmy.weixin4j.model.card.MemberInitInfo;
 import com.foxinmy.weixin4j.model.card.MemberUpdateInfo;
 import com.foxinmy.weixin4j.model.card.MemberUserForm;
@@ -398,5 +399,64 @@ public class CardApi extends MpApi {
 				String.format(card_member_card_update_user_uri,
 						token.getAccessToken()), JSON.toJSONString(updateInfo));
 		return response.getAsJson();
+	}
+
+
+	/**
+	 *  可以查询某个支付即会员规则内容。
+	 *
+	 * @param ruleId
+	 * @return
+	 * @throws WeixinException
+	 */
+	public JSONObject addPayGiftCard(MemberCardPayGiftCardRule rule)
+			throws WeixinException {
+		String card_member_card_pay_gift_card_add_uri = getRequestUri("card_member_card_pay_gift_card_add_uri");
+		Token token = tokenManager.getCache();
+		JSONObject object = new JSONObject();
+		object.put("rule_info",rule);
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_member_card_pay_gift_card_add_uri,
+							  token.getAccessToken()), JSON.toJSONString(object));
+		return response.getAsJson();
+	}
+
+	/**
+	 *  可以查询某个支付即会员规则内容。
+	 *
+	 * @param ruleId
+	 * @return
+	 * @throws WeixinException
+	 */
+	public MemberCardPayGiftCardRule getPayGiftCardByRuleId(String ruleId)
+			throws WeixinException {
+		String card_member_card_pay_gift_card_get_uri = getRequestUri("card_member_card_pay_gift_card_get_uri");
+		Token token = tokenManager.getCache();
+		JSONObject object = new JSONObject();
+		object.put("rule_id",ruleId);
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_member_card_pay_gift_card_get_uri,
+							  token.getAccessToken()), JSON.toJSONString(object));
+		return response.getAsJson().getObject("rule_info",MemberCardPayGiftCardRule.class);
+	}
+
+
+	/**
+	 * 删除之前已经设置的支付即会员规则。
+	 *
+	 * @param ruleId
+	 * @return
+	 * @throws WeixinException
+	 */
+	public ApiResult deletePayGiftCardByRuleId(String ruleId)
+			throws WeixinException {
+		String card_member_card_pay_gift_card_del_uri = getRequestUri("card_member_card_pay_gift_card_del_uri");
+		Token token = tokenManager.getCache();
+		JSONObject object = new JSONObject();
+		object.put("rule_id",ruleId);
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_member_card_pay_gift_card_del_uri,
+							  token.getAccessToken()), JSON.toJSONString(object));
+		return response.getAsResult();
 	}
 }
