@@ -65,7 +65,7 @@ public class MenuApi extends MpApi {
 						if (object instanceof Button && name.equals("content")) {
 							ButtonType buttonType = ((Button) object).getType();
 							if (buttonType != null) {
-								if (ButtonType.view == buttonType) {
+								if (ButtonType.view == buttonType ||  ButtonType.miniprogram == buttonType) {
 									return "url";
 								} else if (ButtonType.media_id == buttonType
 										|| ButtonType.view_limited == buttonType) {

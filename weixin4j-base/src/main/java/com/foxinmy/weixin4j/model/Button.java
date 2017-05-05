@@ -53,6 +53,14 @@ public class Button implements Serializable {
 	@JSONField(serialize = false, deserialize = false)
 	private Object extra;
 	/**
+	 * 小程序的appid
+	 */
+	private String appid;
+	/**
+	 * 小程序的page 地址
+	 */
+	private String pagepath;
+	/**
 	 * 二级菜单数组，个数应为1~5个
 	 */
 	@JSONField(name = "sub_button")
@@ -89,6 +97,23 @@ public class Button implements Serializable {
 		this.name = name;
 		this.content = content;
 		this.type = type;
+		this.subs = new ArrayList<Button>();
+	}
+
+	/**
+	 * 创建小程序的button
+	 *
+	 * @param name     the name
+	 * @param content  the content 不支持小程序的老版本客户端将打开本url。
+	 * @param appid    the appid
+	 * @param pagepath the pagepath
+	 */
+	public Button(String name,String content,String appid,String pagepath){
+		this.name = name;
+		this.content = content;
+		this.type = ButtonType.miniprogram;
+		this.appid = appid;
+		this.pagepath = pagepath;
 		this.subs = new ArrayList<Button>();
 	}
 
@@ -140,6 +165,22 @@ public class Button implements Serializable {
 	public Button pushSub(Button btn) {
 		this.subs.add(btn);
 		return this;
+	}
+
+	public String getAppid() {
+		return appid;
+	}
+
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
+
+	public String getPagepath() {
+		return pagepath;
+	}
+
+	public void setPagepath(String pagepath) {
+		this.pagepath = pagepath;
 	}
 
 	@Override

@@ -66,5 +66,9 @@ public enum ButtonType {
 	/**
 	 * 以下类型请勿使用,在公众平台设置的按钮类型,如果尝试使用API方式创建菜单则会出错。
 	 */
-	popups,text,img,voice,video,news;
+	popups,text,img,voice,video,news,
+	/**
+	 *小程序类型
+	 */
+	miniprogram;
 }
