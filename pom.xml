@@ -45,6 +45,7 @@
 		<module>weixin4j-qy</module>
 		<module>weixin4j-server</module>
 		<module>weixin4j-example</module>
+		<module>weixin4j-app</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
