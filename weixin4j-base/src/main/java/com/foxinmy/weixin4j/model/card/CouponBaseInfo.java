@@ -159,6 +159,47 @@ public class CouponBaseInfo implements Serializable {
 	@JSONField(name = "need_push_on_view")
 	private Boolean needPushOnView;
 
+	/**
+	 * 自定义使用入口跳转小程序的user_name，格式为原始id+@app
+	 */
+	@JSONField(name = "custom_app_brand_user_name")
+	private String customAppBrandUserName;
+	/**
+	 * 自定义使用入口小程序页面地址
+	 */
+	@JSONField(name = "custom_app_brand_pass")
+	private String customAppBrandPass;
+	/**
+	 * 小程序的user_name
+	 */
+	@JSONField(name = "center_app_brand_user_name")
+	private String centerAppBrandUserName;
+	/**
+	 * 自定义居中使用入口小程序页面地址
+	 */
+	@JSONField(name = "center_app_brand_pass")
+	private String centerAppBrandPass;
+	/**
+	 * 小程序的user_name
+	 */
+	@JSONField(name = "promotion_app_brand_user_name")
+	private String promotionAppBrandUserName;
+	/**
+	 * 自定义营销入口小程序页面地址
+	 */
+	@JSONField(name = "promotion_app_brand_pass")
+	private String promotionAppBrandPass;
+	/**
+	 * 小程序的user_name
+	 */
+	@JSONField(name = "activate_app_brand_user_name")
+	private String activateAppBrandUserName;
+	/**
+	 * 激活小程序页面地址
+	 */
+	@JSONField(name = "activate_app_brand_pass")
+	private String activateAppBrandPass;
+
 	private CouponBaseInfo(Builder builder) {
 		this.logoUrl = builder.logoUrl;
 		this.brandName = builder.brandName;
@@ -188,6 +229,22 @@ public class CouponBaseInfo implements Serializable {
 		this.canShare = builder.canShare;
 		this.canGiveFriend = builder.canGiveFriend;
 		this.needPushOnView = builder.needPushOnView;
+		if(builder.centerAppBrandPass != null){
+			this.centerAppBrandPass = builder.centerAppBrandPass;
+			this.centerAppBrandUserName = builder.appWxUserName + "@app";
+		}
+		if(builder.activateAppBrandPass != null){
+			this.activateAppBrandPass = builder.activateAppBrandPass;
+			this.activateAppBrandUserName = builder.appWxUserName + "@app";
+		}
+		if(builder.promotionAppBrandPass != null){
+			this.promotionAppBrandPass = builder.promotionAppBrandPass;
+			this.promotionAppBrandUserName = builder.appWxUserName + "@app";
+		}
+		if(builder.customAppBrandPass != null){
+			this.customAppBrandPass = builder.customAppBrandPass;
+			this.customAppBrandUserName = builder.appWxUserName + "@app";
+		}
 	};
 
 	public String getLogoUrl() {
@@ -300,6 +357,70 @@ public class CouponBaseInfo implements Serializable {
 
 	public Boolean getNeedPushOnView() {
 		return needPushOnView;
+	}
+
+	public String getCustomAppBrandUserName() {
+		return customAppBrandUserName;
+	}
+
+	public void setCustomAppBrandUserName(String customAppBrandUserName) {
+		this.customAppBrandUserName = customAppBrandUserName;
+	}
+
+	public String getCustomAppBrandPass() {
+		return customAppBrandPass;
+	}
+
+	public void setCustomAppBrandPass(String customAppBrandPass) {
+		this.customAppBrandPass = customAppBrandPass;
+	}
+
+	public String getCenterAppBrandUserName() {
+		return centerAppBrandUserName;
+	}
+
+	public void setCenterAppBrandUserName(String centerAppBrandUserName) {
+		this.centerAppBrandUserName = centerAppBrandUserName;
+	}
+
+	public String getCenterAppBrandPass() {
+		return centerAppBrandPass;
+	}
+
+	public void setCenterAppBrandPass(String centerAppBrandPass) {
+		this.centerAppBrandPass = centerAppBrandPass;
+	}
+
+	public String getPromotionAppBrandUserName() {
+		return promotionAppBrandUserName;
+	}
+
+	public void setPromotionAppBrandUserName(String promotionAppBrandUserName) {
+		this.promotionAppBrandUserName = promotionAppBrandUserName;
+	}
+
+	public String getPromotionAppBrandPass() {
+		return promotionAppBrandPass;
+	}
+
+	public void setPromotionAppBrandPass(String promotionAppBrandPass) {
+		this.promotionAppBrandPass = promotionAppBrandPass;
+	}
+
+	public String getActivateAppBrandUserName() {
+		return activateAppBrandUserName;
+	}
+
+	public void setActivateAppBrandUserName(String activateAppBrandUserName) {
+		this.activateAppBrandUserName = activateAppBrandUserName;
+	}
+
+	public String getActivateAppBrandPass() {
+		return activateAppBrandPass;
+	}
+
+	public void setActivateAppBrandPass(String activateAppBrandPass) {
+		this.activateAppBrandPass = activateAppBrandPass;
 	}
 
 	@Override
@@ -453,6 +574,31 @@ public class CouponBaseInfo implements Serializable {
 		 * 用户点击进入卡券时推送事件
 		 */
 		private boolean needPushOnView;
+
+		/**
+		 * 微信的小程序 的 user_name
+		 */
+		private String appWxUserName;
+
+		/**
+		 * 自定义使用入口小程序页面地址
+		 */
+		private String customAppBrandPass;
+		/**
+		 * 自定义居中使用入口小程序页面地址
+		 */
+		private String centerAppBrandPass;
+		/**
+		 * 自定义营销入口小程序页面地址
+		 */
+		private String promotionAppBrandPass;
+
+		/**
+		 * 激活小程序页面地址
+		 */
+		private String activateAppBrandPass;
+
+
 
 		/**
 		 * 默认永久有效
@@ -830,6 +976,33 @@ public class CouponBaseInfo implements Serializable {
 
 		public Builder needPushOnView(boolean needPushOnView){
 			this.needPushOnView = needPushOnView;
+			return this;
+		}
+
+
+		public Builder appWxUserName(String appWxUserName){
+			this.appWxUserName = appWxUserName;
+			return this;
+		}
+
+
+		public Builder customAppBrandPass(String customAppBrandPass) {
+			this.customAppBrandPass = customAppBrandPass;
+			return this;
+		}
+
+		public Builder centerAppBrandPass(String centerAppBrandPass) {
+			this.centerAppBrandPass = centerAppBrandPass;
+			return this;
+		}
+
+		public Builder promotionAppBrandPass(String promotionAppBrandPass) {
+			this.promotionAppBrandPass = promotionAppBrandPass;
+			return this;
+		}
+
+		public Builder activateAppBrandPass(String activateAppBrandPass) {
+			this.activateAppBrandPass = activateAppBrandPass;
 			return this;
 		}
 
