@@ -6,9 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.foxinmy.weixin4j.exception.WeixinException;
 import com.foxinmy.weixin4j.http.weixin.WeixinResponse;
-import com.foxinmy.weixin4j.model.Token;
-import com.foxinmy.weixin4j.model.card.CardCoupon;
-import com.foxinmy.weixin4j.model.card.MemberUserInfo;
 import com.foxinmy.weixin4j.model.poi.Poi;
 import com.foxinmy.weixin4j.model.poi.PoiBaseInfo;
 import com.foxinmy.weixin4j.model.poi.PoiChoose;
@@ -20,7 +17,7 @@ import java.util.List;
 
 
 /**
- * 门店APO
+ * 门店API
  *
  * @className PoiApi
  * @author zhangbin
@@ -49,7 +46,7 @@ public class PoiApi extends MpApi {
 		baseInfo.put("base_info",poi);
 		JSONObject business = new JSONObject();
 		business.put("business", baseInfo);
-		System.err.println(business.toJSONString());
+		//System.err.println(business.toJSONString());
 		String poi_create_uri = getRequestUri("poi_create_uri");
 		WeixinResponse response = weixinExecutor.post(
 				String.format(poi_create_uri, tokenManager.getAccessToken()),
@@ -171,7 +168,7 @@ public class PoiApi extends MpApi {
     }
 
 	/**
-	 * 查询 设置门店(闯进门店)
+	 * 查询 设置门店(创建门店)
 	 * 所使用的 门店分类信息
 	 *
 	 * @return the category list
