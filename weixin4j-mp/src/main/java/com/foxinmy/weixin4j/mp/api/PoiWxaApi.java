@@ -274,7 +274,7 @@ public class PoiWxaApi extends MpApi {
         if(result.getErrcode()!=0){
             throw new WeixinException(String.valueOf(result.getErrcode()),result.getErrmsg());
         }
-        String body = result.getBusinessList();
+        String body = result.getBusinesslist();
         List<WxaBaseInfo> baseInfoList = JSON.parseArray(body, WxaBaseInfo.class);
         List<WxaPoiInfo> poiList = new ArrayList<WxaPoiInfo>();
         for(WxaBaseInfo baseInfo:baseInfoList){
