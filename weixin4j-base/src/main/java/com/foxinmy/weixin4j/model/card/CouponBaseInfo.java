@@ -229,21 +229,21 @@ public class CouponBaseInfo implements Serializable {
 		this.canShare = builder.canShare;
 		this.canGiveFriend = builder.canGiveFriend;
 		this.needPushOnView = builder.needPushOnView;
-		if(builder.centerAppBrandPass != null){
-			this.centerAppBrandPass = builder.centerAppBrandPass;
-			this.centerAppBrandUserName = builder.centerAppWxUserName + "@app";
+		if(builder.centerAppWxUserName != null){
+			this.centerAppBrandPass = "".equals(builder.centerAppWxUserName)? "" : builder.centerAppBrandPass;
+			this.centerAppBrandUserName = "".equals(builder.centerAppWxUserName)? "" : builder.centerAppWxUserName + "@app";
 		}
-		if(builder.activateAppBrandPass != null){
-			this.activateAppBrandPass = builder.activateAppBrandPass;
-			this.activateAppBrandUserName = builder.activateAppWxUserName + "@app";
+		if(builder.activateAppWxUserName != null){
+			this.activateAppBrandPass = "".equals(builder.activateAppWxUserName)? "" :  builder.activateAppBrandPass;
+			this.activateAppBrandUserName = "".equals(builder.activateAppWxUserName)? "" :  builder.activateAppWxUserName + "@app";
 		}
-		if(builder.promotionAppBrandPass != null){
-			this.promotionAppBrandPass = builder.promotionAppBrandPass;
-			this.promotionAppBrandUserName = builder.promotionAppWxUserName + "@app";
+		if(builder.promotionAppWxUserName != null){
+			this.promotionAppBrandPass = "".equals(builder.promotionAppWxUserName)? "" : builder.promotionAppBrandPass;
+			this.promotionAppBrandUserName = "".equals(builder.promotionAppWxUserName)? "" : builder.promotionAppWxUserName + "@app";
 		}
-		if(builder.customAppBrandPass != null){
-			this.customAppBrandPass = builder.customAppBrandPass;
-			this.customAppBrandUserName = builder.customAppWxUserName + "@app";
+		if(builder.customAppWxUserName != null){
+			this.customAppBrandPass = "".equals(builder.customAppWxUserName)? "" : builder.customAppBrandPass;
+			this.customAppBrandUserName = "".equals(builder.customAppWxUserName)? "" : builder.customAppWxUserName + "@app";
 		}
 	};
 
@@ -1009,7 +1009,7 @@ public class CouponBaseInfo implements Serializable {
 		}
 
 		/**
-		 * 自定义使用入口 的小程序跳转
+		 * 自定义使用入口 的小程序跳转，设置 空字符串 ，表示清空小程序跳转。
 		 * @param appWxUserName
 		 * @param customAppBrandPass
 		 * @return
@@ -1021,7 +1021,7 @@ public class CouponBaseInfo implements Serializable {
 		}
 
 		/**
-		 * 自定义居中使用入口的小程序跳转
+		 * 自定义居中使用入口的小程序跳转,设置 空字符串 ，表示清空小程序跳转。
 		 * @param appWxUserName
 		 * @param centerAppBrandPass
 		 * @return
@@ -1033,7 +1033,7 @@ public class CouponBaseInfo implements Serializable {
 		}
 
 		/**
-		 * 自定义营销入口 的小程序跳转
+		 * 自定义营销入口 的小程序跳转，设置 空字符串 ，表示清空小程序跳转。
 		 * @param appWxUserName
 		 * @param promotionAppBrandPass
 		 * @return
@@ -1045,7 +1045,7 @@ public class CouponBaseInfo implements Serializable {
 		}
 
 		/**
-		 * 激活的小程序跳转
+		 * 激活的小程序跳转，设置 空字符串 ，表示清空小程序跳转。
 		 * @param appWxUserName
 		 * @param activateAppBrandPass
 		 * @return
