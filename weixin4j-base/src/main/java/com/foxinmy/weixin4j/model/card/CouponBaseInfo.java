@@ -231,19 +231,19 @@ public class CouponBaseInfo implements Serializable {
 		this.needPushOnView = builder.needPushOnView;
 		if(builder.centerAppBrandPass != null){
 			this.centerAppBrandPass = builder.centerAppBrandPass;
-			this.centerAppBrandUserName = builder.appWxUserName + "@app";
+			this.centerAppBrandUserName = builder.centerAppWxUserName + "@app";
 		}
 		if(builder.activateAppBrandPass != null){
 			this.activateAppBrandPass = builder.activateAppBrandPass;
-			this.activateAppBrandUserName = builder.appWxUserName + "@app";
+			this.activateAppBrandUserName = builder.activateAppWxUserName + "@app";
 		}
 		if(builder.promotionAppBrandPass != null){
 			this.promotionAppBrandPass = builder.promotionAppBrandPass;
-			this.promotionAppBrandUserName = builder.appWxUserName + "@app";
+			this.promotionAppBrandUserName = builder.promotionAppWxUserName + "@app";
 		}
 		if(builder.customAppBrandPass != null){
 			this.customAppBrandPass = builder.customAppBrandPass;
-			this.customAppBrandUserName = builder.appWxUserName + "@app";
+			this.customAppBrandUserName = builder.customAppWxUserName + "@app";
 		}
 	};
 
@@ -578,25 +578,47 @@ public class CouponBaseInfo implements Serializable {
 		/**
 		 * 微信的小程序 的 user_name
 		 */
+		@Deprecated
 		private String appWxUserName;
 
 		/**
 		 * 自定义使用入口小程序页面地址
 		 */
 		private String customAppBrandPass;
+
+		/**
+		 * 自定义使用入口小程序的userName
+		 */
+		private String customAppWxUserName;
+
 		/**
 		 * 自定义居中使用入口小程序页面地址
 		 */
 		private String centerAppBrandPass;
+
+		/**
+		 * 自定义居中使用入口小程序的userName
+		 */
+		private String centerAppWxUserName;
 		/**
 		 * 自定义营销入口小程序页面地址
 		 */
 		private String promotionAppBrandPass;
 
 		/**
+		 * 自定义营销入口小程序的userName
+		 */
+		private String promotionAppWxUserName;
+
+		/**
 		 * 激活小程序页面地址
 		 */
 		private String activateAppBrandPass;
+
+		/**
+		 * 激活小程序的userName
+		 */
+		private String activateAppWxUserName;
 
 
 
@@ -980,29 +1002,57 @@ public class CouponBaseInfo implements Serializable {
 		}
 
 
+		@Deprecated
 		public Builder appWxUserName(String appWxUserName){
 			this.appWxUserName = appWxUserName;
 			return this;
 		}
 
-
-		public Builder customAppBrandPass(String customAppBrandPass) {
+		/**
+		 * 自定义使用入口 的小程序跳转
+		 * @param appWxUserName
+		 * @param customAppBrandPass
+		 * @return
+		 */
+		public Builder customAppBrandPass(String appWxUserName, String customAppBrandPass) {
 			this.customAppBrandPass = customAppBrandPass;
+			this.customAppWxUserName = appWxUserName;
 			return this;
 		}
 
-		public Builder centerAppBrandPass(String centerAppBrandPass) {
+		/**
+		 * 自定义居中使用入口的小程序跳转
+		 * @param appWxUserName
+		 * @param centerAppBrandPass
+		 * @return
+		 */
+		public Builder centerAppBrandPass(String appWxUserName, String centerAppBrandPass) {
 			this.centerAppBrandPass = centerAppBrandPass;
+			this.centerAppWxUserName = appWxUserName;
 			return this;
 		}
 
-		public Builder promotionAppBrandPass(String promotionAppBrandPass) {
+		/**
+		 * 自定义营销入口 的小程序跳转
+		 * @param appWxUserName
+		 * @param promotionAppBrandPass
+		 * @return
+		 */
+		public Builder promotionAppBrandPass(String appWxUserName, String promotionAppBrandPass) {
 			this.promotionAppBrandPass = promotionAppBrandPass;
+			this.promotionAppWxUserName = appWxUserName;
 			return this;
 		}
 
-		public Builder activateAppBrandPass(String activateAppBrandPass) {
+		/**
+		 * 激活的小程序跳转
+		 * @param appWxUserName
+		 * @param activateAppBrandPass
+		 * @return
+		 */
+		public Builder activateAppBrandPass(String appWxUserName, String activateAppBrandPass) {
 			this.activateAppBrandPass = activateAppBrandPass;
+			this.activateAppWxUserName = appWxUserName;
 			return this;
 		}
 
