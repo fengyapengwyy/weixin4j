@@ -446,7 +446,7 @@ public class CouponBaseInfo implements Serializable {
 		this.brandName = null;
 //		this.title = null;
 		this.sku = null;
-		this.bindOpenId = null;
+//		this.bindOpenId = null;
 		this.useCustomCode = null;
 	}
 
