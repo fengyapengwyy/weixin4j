@@ -92,6 +92,9 @@ public final class WeixinErrorUtil2 {
 	}
 
 	public static String getText(String code) throws RuntimeException {
+		if(code == null){
+			return null;
+		}
 		return errorCacheMap.get(code);
 	}
 
