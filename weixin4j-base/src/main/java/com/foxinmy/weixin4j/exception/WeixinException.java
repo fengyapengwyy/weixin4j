@@ -1,7 +1,6 @@
 package com.foxinmy.weixin4j.exception;
 
 import com.foxinmy.weixin4j.util.StringUtil;
-import com.foxinmy.weixin4j.util.WeixinErrorUtil;
 import com.foxinmy.weixin4j.util.WeixinErrorUtil2;
 
 /**
@@ -27,6 +26,26 @@ public class WeixinException extends Exception {
 
 
     public WeixinException(String errorCode, String errorMsg, String describeErrorMsg) {
+        this._WeixinException(errorCode, errorMsg, describeErrorMsg);
+    }
+
+    public WeixinException(String desc) {
+        this._WeixinException("-1", desc, null);
+    }
+
+    public WeixinException(Throwable e) {
+        super(e);
+        this._WeixinException("-1", e.getMessage(), null);
+
+
+    }
+
+    public WeixinException(String message, Throwable cause) {
+        super(message, cause);
+        this._WeixinException("-1", message, null);
+    }
+
+    private void _WeixinException(String errorCode, String errorMsg, String describeErrorMsg) {
         this.code = errorCode;
         this.desc = errorMsg;
         if (describeErrorMsg == null) {
@@ -36,22 +55,8 @@ public class WeixinException extends Exception {
         }
     }
 
-    public WeixinException(String desc) {
-        this.code = "-1";
-        this.desc = desc;
-    }
-
     public String getDescribeErrorMsg() {
         return describeErrorMsg;
-    }
-
-
-    public WeixinException(Throwable e) {
-        super(e);
-    }
-
-    public WeixinException(String message, Throwable cause) {
-        super(message, cause);
     }
 
     public String getErrorCode() {
@@ -62,6 +67,11 @@ public class WeixinException extends Exception {
         return desc;
     }
 
+    /**
+     * @see #getDescribeErrorMsg()
+     * @return
+     */
+    @Deprecated
     public String getErrorText() {
         return WeixinErrorUtil2.getText(code);
     }
