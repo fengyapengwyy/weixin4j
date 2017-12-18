@@ -55,6 +55,9 @@ public class RedpacketSendResult extends MerchantResult {
 	@JSONField(name = "send_listid")
 	private String sendListid;
 
+
+	protected  String payResponse;
+
 	protected RedpacketSendResult() {
 		// jaxb required
 	}
@@ -92,6 +95,14 @@ public class RedpacketSendResult extends MerchantResult {
 
 	public String getSendListid() {
 		return sendListid;
+	}
+
+	public String getPayResponse() {
+		return payResponse;
+	}
+
+	public void setPayResponse(String payResponse) {
+		this.payResponse = payResponse;
 	}
 
 	@Override
