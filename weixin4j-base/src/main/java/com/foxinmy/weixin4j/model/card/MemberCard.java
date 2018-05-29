@@ -378,8 +378,8 @@ public class MemberCard extends CardCoupon {
             return this;
         }
 
-        public Builder customCell1AppBrandPass(String name, String appBrandUserName, String appBrandPass) {
-            this.customCell1 = new MemCardCustomField(name, null,null,appBrandUserName,appBrandPass);
+        public Builder customCell1AppBrandPass(String name,String url, String tips, String appBrandUserName, String appBrandPass) {
+            this.customCell1 = new MemCardCustomField(name, url,tips,appBrandUserName,appBrandPass);
             return this;
         }
 
