@@ -33,11 +33,13 @@ public class MemCardCustomField {
     /**
      * 自定义入口小程序user_name，格式为原始id+@app
      */
+    @JSONField(name = "app_brand_user_name")
     private String appBrandUserName;
 
     /**
      * 自定义入口小程序的页面路径
      */
+    @JSONField(name = "app_brand_pass")
     private String appBrandPass;
 
     public MemCardCustomField(FieldNameType fieldNameType, String url) {
