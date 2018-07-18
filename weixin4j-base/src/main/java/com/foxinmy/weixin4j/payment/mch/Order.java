@@ -121,6 +121,8 @@ public class Order extends MerchantTradeResult {
 	@JSONField(name = "sub_is_subscribe")
 	private String subIsSubscribe;
 
+	protected  String payResponse;
+
 	protected Order() {
 		// jaxb required
 	}
@@ -217,6 +219,14 @@ public class Order extends MerchantTradeResult {
 
 	public String getSubIsSubscribe() {
 		return subIsSubscribe;
+	}
+
+	public String getPayResponse() {
+		return payResponse;
+	}
+
+	public void setPayResponse(String payResponse) {
+		this.payResponse = payResponse;
 	}
 
 	@JSONField(serialize = false)

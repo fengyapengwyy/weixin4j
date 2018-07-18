@@ -55,6 +55,11 @@ public class XmlResult implements Serializable {
 	@JSONField(name = "err_code_des")
 	private String errCodeDes;
 
+	/**
+	 *
+	 */
+	private String responseBody;
+
 	protected XmlResult() {
 		// jaxb required
 	}

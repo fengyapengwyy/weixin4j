@@ -631,8 +631,10 @@ public class PayApi extends MchApi {
 		String param = XmlStream.map2xml(map);
 		WeixinResponse response = weixinExecutor.post(
 				getRequestUri("order_query_uri"), param);
-		return ListsuffixResultDeserializer.deserialize(response.getAsString(),
+		Order order =  ListsuffixResultDeserializer.deserialize(response.getAsString(),
 				Order.class);
+		order.setPayResponse(response.getAsString());
+		return order;
 	}
 
 	/**
