@@ -4,7 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.foxinmy</groupId>
 	<artifactId>weixin4j</artifactId>
-	<version>1.8.2</version>
+	<version>1.7.8-SNAPSHOT</version>
+
+	<!--1.7.7 修改卡券的时候干掉 清除 OpenId -SNAPSHOT-->
 	<packaging>pom</packaging>
 	<name>weixin4j</name>
 	<url>https://github.com/foxinmy/weixin4j</url>
@@ -43,16 +45,17 @@
 		<module>weixin4j-base</module>
 		<module>weixin4j-mp</module>
 		<module>weixin4j-qy</module>
-		<module>weixin4j-wxa</module>
 		<module>weixin4j-server</module>
 		<module>weixin4j-example</module>
+		<module>weixin4j-app</module>
+		<module>weixin4j-wxa</module>
 		<module>weixin4j-serverX</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
-		<fastjson.version>1.2.31</fastjson.version>
+		<fastjson.version>1.2.3</fastjson.version>
 	</properties>
 	<build>
 		<plugins>
@@ -65,6 +68,11 @@
 					<target>1.6</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -208,7 +216,6 @@
 					<include>**/*.pem</include>
 					<include>**/*.p12</include>
 					<include>**/*.pfx</include>
-					<include>**/*.jks</include>
 				</includes>
 			</resource>
 			<resource>
@@ -220,17 +227,6 @@
 			</resource>
 		</resources>
 	</build>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<additionalparam>-Xdoclint:none</additionalparam>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
 	<profiles>
 		<profile>
 			<id>release</id>
@@ -263,13 +259,15 @@
 		</dependencies>
 	</dependencyManagement>
 	<distributionManagement>
-		<snapshotRepository>
-			<id>oss-snapshot</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-		</snapshotRepository>
 		<repository>
-			<id>oss-release</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<id>maven-releases</id>
+			<name>Project Releases</name>
+			<url>http://repo.wyying.com/repository/maven-releases/</url>
 		</repository>
+		<snapshotRepository>
+			<id>maven-snapshots</id>
+			<name>Project Snapshots</name>
+			<url>http://repo.wyying.com/repository/maven-snapshots/</url>
+		</snapshotRepository>
 	</distributionManagement>
 </project>

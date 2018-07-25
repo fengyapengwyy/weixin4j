@@ -38,7 +38,7 @@ public class CorpPayment extends MerchantResult {
 	/**
 	 * 校验用户姓名选项
 	 * 
-	 * @see com.foxinmy.weixin4j.type.mch.CorpPaymentCheckNameType.type.MPPaymentCheckNameType
+	 * @see com.foxinmy.weixin4j.type.mch.CorpPaymentCheckNameType
 	 */
 	@XmlElement(name = "check_name")
 	@JSONField(name = "check_name")
@@ -92,6 +92,33 @@ public class CorpPayment extends MerchantResult {
 		this.checkNameType = checkNameType;
 		this.desc = desc;
 		this.amount = DateUtil.formatYuan2Fen(amount);
+		this.clientIp = clientIp;
+	}
+
+	/**
+	 * 企业付款
+	 *
+	 * @param outTradeNo
+	 *            商户的订单号
+	 * @param openId
+	 *            用户的openid
+	 * @param checkNameType
+	 *            校验用户姓名选项
+	 * @param desc
+	 *            描述
+	 * @param amount
+	 *            金额 单位分
+	 * @param clientIp
+	 *            调用接口IP
+	 */
+	public CorpPayment(String outTradeNo, String openId,
+					   CorpPaymentCheckNameType checkNameType, String desc, int amount,
+					   String clientIp) {
+		this.outTradeNo = outTradeNo;
+		this.openId = openId;
+		this.checkNameType = checkNameType;
+		this.desc = desc;
+		this.amount = amount;
 		this.clientIp = clientIp;
 	}
 

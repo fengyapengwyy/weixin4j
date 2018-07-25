@@ -13,6 +13,7 @@ import com.foxinmy.weixin4j.model.Token;
 import com.foxinmy.weixin4j.model.card.CardCoupon;
 import com.foxinmy.weixin4j.model.card.CardCoupons;
 import com.foxinmy.weixin4j.model.card.CardQR;
+import com.foxinmy.weixin4j.model.card.MemberCardPayGiftCardRule;
 import com.foxinmy.weixin4j.model.card.MemberInitInfo;
 import com.foxinmy.weixin4j.model.card.MemberUpdateInfo;
 import com.foxinmy.weixin4j.model.card.MemberUserForm;
@@ -168,7 +169,7 @@ public class CardApi extends MpApi {
 	 * 1.同时支持“openid”、“username”两种字段设置白名单，总数上限为10个。
 	 * 2.设置测试白名单接口为全量设置，即测试名单发生变化时需调用该接口重新传入所有测试人员的ID.
 	 * 3.白名单用户领取该卡券时将无视卡券失效状态，请开发者注意。
-	 * 
+	 *
 	 * @param openIds
 	 *            the open ids
 	 * @param userNames
@@ -198,7 +199,7 @@ public class CardApi extends MpApi {
 
 	/**
 	 * 查看获取卡券的审核状态
-	 * 
+	 *
 	 * @see <a href=
 	 *      'https://mp.weixin.qq.com/wiki?action=doc&id=mp1451025272&t=0.18670321276182844#3'
 	 *      > 查看卡券详情</a>
@@ -251,6 +252,75 @@ public class CardApi extends MpApi {
 				JSON.toJSONString(request));
 		JSONObject jsonObject = response.getAsJson();
 		return jsonObject.getBoolean("send_check");
+	}
+
+	/**
+	 * 删除卡券<br/>
+	 * 删除卡券接口允许商户删除任意一类卡券。删除卡券后，该卡券对应已生成的领取用二维码、添加到卡包JS API均会失效。
+	 * 注意：如用户在商家删除卡券前已领取一张或多张该卡券依旧有效。即删除卡券不能删除已被用户领取，保存在微信客户端中的卡券。
+	 *
+	 *
+	 * @param cardId the card id
+	 * @return api result
+	 * @throws WeixinException the weixin exception
+	 * @author fengyapeng
+	 * @since 2017 -02-07 15:58:17
+	 */
+	public ApiResult deleteCardCoupon(String cardId) throws WeixinException {
+		JSONObject request = new JSONObject();
+		request.put("card_id", cardId);
+		String card_delete_uri = getRequestUri("card_delete_uri");
+		Token token = tokenManager.getCache();
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_delete_uri, token.getAccessToken()),
+				JSON.toJSONString(request));
+		return response.getAsResult();
+	}
+
+    /**
+     * 调用修改库存接口增减某张卡券的库存。
+     *
+     * @param cardId the card id
+     * @param num    the num
+     * @return the api result
+     * @throws WeixinException the weixin exception
+     * @author fengyapeng
+     * @since 2017 -02-07 17:36:36
+     */
+    public ApiResult updateCardCouponStock(String cardId, int num) throws WeixinException {
+		JSONObject request = new JSONObject();
+		request.put("card_id", cardId);
+		if(num>0){
+			request.put("increase_stock_value", num);
+		}else{
+			request.put("reduce_stock_value",-num);
+		}
+		String card_modify_stock_uri = getRequestUri("card_modify_stock_uri");
+		Token token = tokenManager.getCache();
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_modify_stock_uri, token.getAccessToken()),
+				JSON.toJSONString(request));
+		return response.getAsResult();
+	}
+
+	/**
+	 * 消耗code接口是核销卡券的唯一接口,开发者可以调用当前接口将用户的优惠券进行核销，该过程不可逆。
+	 *
+	 * @param cardId the card id
+	 * @param code   the code
+	 * @return api result
+	 * @author fengyapeng
+	 * @since 2017 -02-09 09:56:01
+	 */
+	public String consumeCardCode(String cardId,String code) throws WeixinException {
+		JSONObject request = new JSONObject();
+		request.put("card_id",cardId);
+		request.put("code",code);
+		String card_modify_stock_uri = getRequestUri("card_code_custom_uri");
+		Token token = tokenManager.getCache();
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_modify_stock_uri, token.getAccessToken()),JSON.toJSONString(request));
+		return response.getAsJson().getString("openid");
 	}
 
 	/**
@@ -316,7 +386,7 @@ public class CardApi extends MpApi {
 
 	/**
 	 * 更新会员 result_bonus 当前用户积分总额 result_balance 当前用户预存总金额 openid 用户openid
-	 * 
+	 *
 	 * @param updateInfo
 	 * @return
 	 * @throws WeixinException
@@ -329,5 +399,64 @@ public class CardApi extends MpApi {
 				String.format(card_member_card_update_user_uri,
 						token.getAccessToken()), JSON.toJSONString(updateInfo));
 		return response.getAsJson();
+	}
+
+
+	/**
+	 *  可以查询某个支付即会员规则内容。
+	 *
+	 * @param ruleId
+	 * @return
+	 * @throws WeixinException
+	 */
+	public JSONObject addPayGiftCard(MemberCardPayGiftCardRule rule)
+			throws WeixinException {
+		String card_member_card_pay_gift_card_add_uri = getRequestUri("card_member_card_pay_gift_card_add_uri");
+		Token token = tokenManager.getCache();
+		JSONObject object = new JSONObject();
+		object.put("rule_info",rule);
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_member_card_pay_gift_card_add_uri,
+							  token.getAccessToken()), JSON.toJSONString(object));
+		return response.getAsJson();
+	}
+
+	/**
+	 *  可以查询某个支付即会员规则内容。
+	 *
+	 * @param ruleId
+	 * @return
+	 * @throws WeixinException
+	 */
+	public MemberCardPayGiftCardRule getPayGiftCardByRuleId(String ruleId)
+			throws WeixinException {
+		String card_member_card_pay_gift_card_get_uri = getRequestUri("card_member_card_pay_gift_card_get_uri");
+		Token token = tokenManager.getCache();
+		JSONObject object = new JSONObject();
+		object.put("rule_id",ruleId);
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_member_card_pay_gift_card_get_uri,
+							  token.getAccessToken()), JSON.toJSONString(object));
+		return response.getAsJson().getObject("rule_info",MemberCardPayGiftCardRule.class);
+	}
+
+
+	/**
+	 * 删除之前已经设置的支付即会员规则。
+	 *
+	 * @param ruleId
+	 * @return
+	 * @throws WeixinException
+	 */
+	public ApiResult deletePayGiftCardByRuleId(String ruleId)
+			throws WeixinException {
+		String card_member_card_pay_gift_card_del_uri = getRequestUri("card_member_card_pay_gift_card_del_uri");
+		Token token = tokenManager.getCache();
+		JSONObject object = new JSONObject();
+		object.put("rule_id",ruleId);
+		WeixinResponse response = weixinExecutor.post(
+				String.format(card_member_card_pay_gift_card_del_uri,
+							  token.getAccessToken()), JSON.toJSONString(object));
+		return response.getAsResult();
 	}
 }

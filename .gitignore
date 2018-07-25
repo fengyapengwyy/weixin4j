@@ -31,3 +31,4 @@ Thumbs.db
 /target/
 weixin4j-future
 .DS_Store
+/weixin4j-app/target

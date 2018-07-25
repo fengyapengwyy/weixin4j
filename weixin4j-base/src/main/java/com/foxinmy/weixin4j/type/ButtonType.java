@@ -66,5 +66,10 @@ public enum ButtonType {
 	/**
 	 * 小程序
 	 */
+	popups,text,img,voice,video,news,
+	/**
+	 *小程序类型
+	 */
 	miniprogram;
+
 }

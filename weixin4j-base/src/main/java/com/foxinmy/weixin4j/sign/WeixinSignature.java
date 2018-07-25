@@ -1,5 +1,6 @@
 package com.foxinmy.weixin4j.sign;
 
+import com.foxinmy.weixin4j.http.weixin.WeixinResponse;
 import com.foxinmy.weixin4j.type.SignType;
 
 /**
@@ -40,4 +41,11 @@ public interface WeixinSignature {
 	 * @return
 	 */
 	public String sign(Object obj);
+
+	/**
+	 * 验证返回结果
+	 * @param response
+	 * @return
+	 */
+	boolean validatePaySign(WeixinResponse response);
 }

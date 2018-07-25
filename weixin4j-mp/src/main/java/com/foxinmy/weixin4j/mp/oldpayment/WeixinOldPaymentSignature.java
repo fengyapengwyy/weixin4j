@@ -2,6 +2,7 @@ package com.foxinmy.weixin4j.mp.oldpayment;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.foxinmy.weixin4j.http.weixin.WeixinResponse;
 import com.foxinmy.weixin4j.sign.AbstractWeixinSignature;
 import com.foxinmy.weixin4j.type.SignType;
 import com.foxinmy.weixin4j.util.DigestUtil;
@@ -46,6 +47,14 @@ public class WeixinOldPaymentSignature extends AbstractWeixinSignature {
 		}
 		((JSONObject) obj).put("appKey", paySignKey);
 		return DigestUtil.SHA1(join(obj).toString());
+	}
+
+	/**
+	 * 验证返回结果
+	 */
+	@Override
+	public boolean validatePaySign(WeixinResponse response) {
+		return true;
 	}
 
 	@Override

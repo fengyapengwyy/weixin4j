@@ -5,20 +5,12 @@
 	<parent>
 		<groupId>com.foxinmy</groupId>
 		<artifactId>weixin4j</artifactId>
-		<version>1.8.2</version>
+		<version>1.7.8-SNAPSHOT</version>
 	</parent>
 	<artifactId>weixin4j-base</artifactId>
 	<name>weixin4j-base</name>
 	<description>微信开发基础工程</description>
 	<url>https://github.com/foxinmy/weixin4j/tree/master/weixin4j-base</url>
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-	</build>
 	<dependencies>
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -70,6 +62,12 @@
 			<artifactId>Memcached-Java-Client</artifactId>
 			<version>3.0.2</version>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.19</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

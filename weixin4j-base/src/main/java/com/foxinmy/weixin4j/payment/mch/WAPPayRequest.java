@@ -22,11 +22,9 @@ public class WAPPayRequest extends AbstractPayRequest {
 	 */
 	private final String payUrl;
 
-	public WAPPayRequest(String prePayId, String payUrl,
-			WeixinPayAccount payAccount) {
-		super(prePayId, payAccount);
+	public WAPPayRequest(PrePay prePay,String payUrl, WeixinPayAccount payAccount) {
+		super(prePay.getPrepayId(),prePay.getResponse(), payAccount);
 		this.payUrl = payUrl;
-
 	}
 
 	@Override

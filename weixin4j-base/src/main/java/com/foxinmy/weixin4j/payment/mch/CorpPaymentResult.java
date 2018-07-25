@@ -44,6 +44,8 @@ public class CorpPaymentResult extends MerchantResult {
 	@XmlElement(name = "payment_time")
 	private String paymentTime;
 
+	protected  String payResponse;
+
 	protected CorpPaymentResult() {
 		// jaxb required
 	}
@@ -64,6 +66,14 @@ public class CorpPaymentResult extends MerchantResult {
 	public Date getFormatPaymentTime() {
 		return paymentTime != null ? DateUtil.parseDate(paymentTime,
 				"yyyy-MM-dd HH:mm:ss") : null;
+	}
+
+	public String getPayResponse() {
+		return payResponse;
+	}
+
+	public void setPayResponse(String payResponse) {
+		this.payResponse = payResponse;
 	}
 
 	@Override

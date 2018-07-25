@@ -43,6 +43,8 @@ public class PrePay extends MerchantResult {
 			@XmlElement(name = "mweb_url") })
 	private String payUrl;
 
+	private String response;
+
 	protected PrePay() {
 		// jaxb required
 	}
@@ -73,6 +75,14 @@ public class PrePay extends MerchantResult {
 
 	public void setPayUrl(String payUrl) {
 		this.payUrl = payUrl;
+	}
+
+	public String getResponse() {
+		return response;
+	}
+
+	public void setResponse(String response) {
+		this.response = response;
 	}
 
 	@Override

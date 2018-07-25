@@ -12,6 +12,17 @@
 	<name>weixin4j-server</name>
 	<url>https://github.com/foxinmy/weixin4j/tree/master/weixin4j-server</url>
 	<description>微信消息netty服务器</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>io.netty</groupId>

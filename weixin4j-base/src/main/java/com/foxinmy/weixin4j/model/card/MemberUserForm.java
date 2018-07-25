@@ -7,6 +7,7 @@ import com.foxinmy.weixin4j.type.card.ActivateCommonField;
 import com.foxinmy.weixin4j.type.card.ActivateFormFieldType;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 /**
  * 普通一键激活 中设置会员卡
@@ -111,13 +112,13 @@ public class MemberUserForm {
          * 微信格式化的选项类型
          */
         @JSONField(name = "common_field_id_list")
-        private HashSet<ActivateCommonField> commonFieldIdList;
+        private LinkedHashSet<ActivateCommonField> commonFieldIdList;
 
         /**
          * 自定义选项名称。
          */
         @JSONField(name = "custom_field_list")
-        private HashSet<String> customFieldList;
+        private LinkedHashSet<String> customFieldList;
 
         /**
          * 自定义富文本类型
@@ -145,7 +146,7 @@ public class MemberUserForm {
          */
         public FormBudiler addCommonField(ActivateCommonField... fields) {
             if (commonFieldIdList == null) {
-                commonFieldIdList = new HashSet<ActivateCommonField>();
+                commonFieldIdList = new LinkedHashSet<ActivateCommonField>();
             }
             for (ActivateCommonField field : fields) {
                 commonFieldIdList.add(field);
@@ -159,7 +160,7 @@ public class MemberUserForm {
          */
         public FormBudiler addCustomField(String... names) {
             if (customFieldList == null) {
-                customFieldList = new HashSet<String>();
+                customFieldList = new LinkedHashSet<String>();
             }
             for (String name : names) {
                 customFieldList.add(name);
