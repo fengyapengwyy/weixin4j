@@ -75,6 +75,10 @@ public class TemplateMessage implements Serializable {
         return toUser;
     }
 
+    public void setToUser(String toUser) {
+        this.toUser = toUser;
+    }
+
     public String getTemplateId() {
         return templateId;
     }

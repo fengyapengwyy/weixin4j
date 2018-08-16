@@ -2,6 +2,8 @@ package com.foxinmy.weixin4j.app.api;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.foxinmy.weixin4j.app.model.AuditInfo;
 import com.foxinmy.weixin4j.app.model.Category;
 import com.foxinmy.weixin4j.app.model.ExtInfo;
 import com.foxinmy.weixin4j.app.model.SubmitAuditItem;
@@ -115,9 +117,10 @@ public class CodeApi extends AppApi {
         jsonObject.put("auditid", auditId);
         WeixinResponse response = weixinExecutor
                 .post(String.format(submit_audit_url, tokenManager.getAccessToken()), jsonObject.toJSONString());
-        Integer status = response.getAsJson().getInteger("status");
+        AuditInfo auditStatus = response.getAsObject(new TypeReference<AuditInfo>() {
+        });
 
-        switch (status) {
+        switch (auditStatus.getStatus()) {
             case 0:
                 return AuditStatus.SUCCESS;
             case 1:
@@ -125,6 +128,24 @@ public class CodeApi extends AppApi {
             default:
                 return AuditStatus.AUDITING;
         }
+    }
+
+    /**
+     * 获取第三方提交的审核版本的审核状态
+     */
+    public AuditInfo getLatestAuditStatus() throws WeixinException {
+        String submit_audit_url = getRequestUri("get_latest_auditstatus_url");
+        WeixinResponse response = weixinExecutor.get(String.format(submit_audit_url, tokenManager.getAccessToken()));
+        return response.getAsObject(new TypeReference<AuditInfo>() {
+        });
+    }
+
+    /**
+     * 小程序审核撤回
+     */
+    public void undoCodeAudit() throws WeixinException {
+        String undo_code_audit_url = getRequestUri("undo_code_audit_url");
+        WeixinResponse response = weixinExecutor.get(String.format(undo_code_audit_url, tokenManager.getAccessToken()));
     }
 
 
@@ -140,16 +161,23 @@ public class CodeApi extends AppApi {
 
     /**
      * 修改小程序线上代码的可见状态（仅供第三方代小程序调用）
-     * @param visitStatus
-     * @return
-     * @throws WeixinException
      */
     public ApiResult changeVisitStatus(VisitStatus visitStatus) throws WeixinException {
         String change_visitstatus_url = getRequestUri("change_visitstatus_url");
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("action",visitStatus);
+        jsonObject.put("action", visitStatus);
         WeixinResponse response = weixinExecutor
                 .post(String.format(change_visitstatus_url, tokenManager.getAccessToken()), jsonObject.toJSONString());
+        return response.getAsResult();
+    }
+
+
+    /**
+     * 小程序版本回退（仅供第三方代小程序调用）
+     */
+    public ApiResult revertcoderelease() throws WeixinException {
+        String change_visitstatus_url = getRequestUri("revertcoderelease_url");
+        WeixinResponse response = weixinExecutor.get(String.format(change_visitstatus_url, tokenManager.getAccessToken()));
         return response.getAsResult();
     }
 
